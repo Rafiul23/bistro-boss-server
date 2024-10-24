@@ -1,0 +1,26 @@
+// config/db.js
+const { MongoClient, ServerApiVersion } = require('mongodb');
+require('dotenv').config();
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wlof2pa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+async function connectDB() {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB successfully!");
+    return client.db("yourDatabaseName"); // Replace with your DB name
+  } catch (err) {
+    console.error("MongoDB connection failed", err);
+    process.exit(1); // Exit if the connection fails
+  }
+}
+
+module.exports = connectDB;
