@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 require('dotenv').config();
 const menuRouter = require('./routes/menu.route');
+const reviewsRouter = require('./routes/reviews.route');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -15,9 +16,10 @@ connectDB();
 
 // Define routes
 app.use(menuRouter);
+app.use(reviewsRouter);
 
 app.get('/', (req, res) => {
-  res.send('Server is running');
+  res.send('Boss is running');
 });
 
 app.listen(port, () => {

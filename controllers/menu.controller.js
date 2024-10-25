@@ -6,7 +6,7 @@ const getMenuItems = async(req, res)=>{
         const result = await db.collection('menu').find().toArray();
         res.send(result);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch items' });
+        res.status(500).json({ error: 'Failed to fetch menu' });
     }
 }
 
