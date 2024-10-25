@@ -12,11 +12,18 @@ const client = new MongoClient(uri, {
   }
 });
 
+let db = null;
+
 async function connectDB() {
+
+  if(db){
+    return db;
+  }
+
   try {
     await client.connect();
     console.log("Connected to MongoDB successfully!");
-    return client.db("bistroDB"); // Replace with your DB name
+    return db = client.db("bistroDB"); // Replace with your DB name
   } catch (err) {
     console.error("MongoDB connection failed", err);
     process.exit(1); // Exit if the connection fails
