@@ -25,9 +25,9 @@ const getCartItems = async(req, res)=>{
     try {
         const db = await connectDB();
         let query = {};
-        if(req.query?.email){
+        if(req?.query?.email){
             query = {
-                email: email
+                email: req.query.email
             }
         }
         const result = await db.collection('carts').find(query).toArray();
