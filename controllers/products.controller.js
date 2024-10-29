@@ -21,7 +21,24 @@ const addToCart = async(req, res)=>{
     }
 }
 
+const getCartItems = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        let query = {};
+        if(req.query?.email){
+            query = {
+                email: email
+            }
+        }
+        const result = await db.collection('carts').find(query).toArray();
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to load cart items' });
+    }
+}
+
 module.exports = {
     getMenuItems,
-    addToCart
+    addToCart,
+    getCartItems
 }
