@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 require('dotenv').config();
-const menuRouter = require('./routes/menu.route');
+const productsRouter = require('./routes/products.route');
 const reviewsRouter = require('./routes/reviews.route');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -15,7 +15,7 @@ app.use(express.json());
 connectDB();
 
 // Define routes
-app.use(menuRouter);
+app.use(productsRouter);
 app.use(reviewsRouter);
 
 app.get('/', (req, res) => {
