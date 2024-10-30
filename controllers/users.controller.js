@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const connectDB = require('../config/db');
 
 const saveUser = async(req, res)=>{
@@ -24,9 +25,22 @@ const getUsers = async(req, res)=>{
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch users' });
     }
+};
+
+const deleteUser = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await db.collection('users').deleteOne(query);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete user' });
+    }
 }
 
 module.exports = {
     saveUser,
-    getUsers
+    getUsers,
+    deleteUser
 }
