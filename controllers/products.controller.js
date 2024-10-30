@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const connectDB = require('../config/db');
 
 const getMenuItems = async(req, res)=>{
@@ -37,8 +38,21 @@ const getCartItems = async(req, res)=>{
     }
 }
 
+const deletCartItems = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await db.collection('carts').deleteOne(query);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to load cart items' });
+    }
+}
+
 module.exports = {
     getMenuItems,
     addToCart,
-    getCartItems
+    getCartItems,
+    deletCartItems
 }
