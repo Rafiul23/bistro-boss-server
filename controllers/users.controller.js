@@ -12,10 +12,21 @@ const saveUser = async(req, res)=>{
         const result = await db.collection('users').insertOne(user);
         res.send(result);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch reviews' });
+        res.status(500).json({ error: 'Failed to save a user' });
+    }
+}
+
+const getUsers = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const result = await db.collection('users').find().toArray();
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch users' });
     }
 }
 
 module.exports = {
-    saveUser
+    saveUser,
+    getUsers
 }
