@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 require('dotenv').config();
 const productsRouter = require('./routes/products.route');
 const reviewsRouter = require('./routes/reviews.route');
+const usersRouter = require('./routes/users.route');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -17,6 +18,7 @@ connectDB();
 // Define routes
 app.use(productsRouter);
 app.use(reviewsRouter);
+app.use(usersRouter);
 
 app.get('/', (req, res) => {
   res.send('Boss is running');
