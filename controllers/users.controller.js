@@ -37,10 +37,29 @@ const deleteUser = async(req, res)=>{
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete user' });
     }
+};
+
+const makeAdmin = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const id = req.params.id;
+        const filter = {_id: new ObjectId(id)};
+        const options = {upsert: true};
+        const updatedRole = {
+            $set: {
+                role: 'admin'
+            }
+        };
+        const result = await db.collection('users').updateOne(filter, updatedRole, options);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete user' });
+    }
 }
 
 module.exports = {
     saveUser,
     getUsers,
-    deleteUser
+    deleteUser,
+    makeAdmin
 }
