@@ -72,10 +72,30 @@ const postJWT = async (req, res) => {
   }
 };
 
+const isAdmin = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const email = req.params.email;
+        if(email !== req.user.email){
+            return res.status(403).send({message: 'forbidden access'});
+        } 
+        const query = {email: email};
+        const user = await db.collection('users').findOne(query);
+        let admin = false;
+        if(user){
+            admin = user?.role === 'admin';
+            res.send({admin});
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Failed to load admin" });
+    }
+}
+
 module.exports = {
   saveUser,
   getUsers,
   deleteUser,
   makeAdmin,
   postJWT,
+  isAdmin
 };
