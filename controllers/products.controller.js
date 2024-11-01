@@ -50,9 +50,21 @@ const deletCartItems = async(req, res)=>{
     }
 }
 
+const postRecipe = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const recipe = req.body;
+        const result = await db.collection('menu').insertOne(recipe);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to post a precipe' });
+    }
+}
+
 module.exports = {
     getMenuItems,
     addToCart,
     getCartItems,
-    deletCartItems
+    deletCartItems,
+    postRecipe
 }
