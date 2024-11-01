@@ -59,6 +59,18 @@ const postRecipe = async(req, res)=>{
     } catch (error) {
         res.status(500).json({ error: 'Failed to post a precipe' });
     }
+};
+
+const deleteRecipe = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await db.collection('menu').deleteOne(query);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to post a precipe' });
+    }
 }
 
 module.exports = {
@@ -66,5 +78,6 @@ module.exports = {
     addToCart,
     getCartItems,
     deletCartItems,
-    postRecipe
+    postRecipe,
+    deleteRecipe
 }
