@@ -71,6 +71,18 @@ const deleteRecipe = async(req, res)=>{
     } catch (error) {
         res.status(500).json({ error: 'Failed to post a precipe' });
     }
+};
+
+const getSingleMenuItem = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await db.collection('menu').findOne(query);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch a precipe' });
+    }
 }
 
 module.exports = {
@@ -79,5 +91,6 @@ module.exports = {
     getCartItems,
     deletCartItems,
     postRecipe,
-    deleteRecipe
+    deleteRecipe,
+    getSingleMenuItem
 }
