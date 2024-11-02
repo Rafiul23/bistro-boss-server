@@ -8,6 +8,7 @@ const {
   postRecipe,
   deleteRecipe,
   getSingleMenuItem,
+  updateMenuItem,
 } = require("../controllers/products.controller");
 const { verifyToken, verifyAdmin } = require("../middlewares");
 const router = express.Router();
@@ -19,5 +20,6 @@ router.delete("/carts/:id", deletCartItems);
 router.post("/menu", verifyToken, verifyAdmin, postRecipe);
 router.delete("/menu/:id", verifyToken, verifyAdmin, deleteRecipe);
 router.get("/menu/:id", getSingleMenuItem);
+router.patch('/menu/:id', verifyToken, verifyAdmin, updateMenuItem)
 
 module.exports = router;

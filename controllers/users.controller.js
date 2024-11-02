@@ -32,7 +32,7 @@ const deleteUser = async (req, res) => {
   try {
     const db = await connectDB();
     const id = req.params.id;
-    const query = { _id: new ObjectId(id) };
+    const query = { _id: new ObjectId.createFromTime(id) };
     const result = await db.collection("users").deleteOne(query);
     res.send(result);
   } catch (error) {
@@ -44,7 +44,7 @@ const makeAdmin = async (req, res) => {
   try {
     const db = await connectDB();
     const id = req.params.id;
-    const filter = { _id: new ObjectId(id) };
+    const filter = { _id: new ObjectId.createFromTime(id) };
     const options = { upsert: true };
     const updatedRole = {
       $set: {
