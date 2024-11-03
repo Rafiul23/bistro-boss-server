@@ -32,7 +32,23 @@ const savePayment = async(req, res)=>{
     }
 }
 
+const getPaymentHistory = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const email = req.params.email;
+        if(email !== req.user.email){
+          return res.status(403).send({message: 'Forbidden Access'});
+        }
+        const query = {email: email};
+        const result = await db.collection('payments').find(query).toArray();
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch payment info' }); 
+    }
+}
+
 module.exports = {
     postPayment,
-    savePayment
+    savePayment,
+    getPaymentHistory
 }
