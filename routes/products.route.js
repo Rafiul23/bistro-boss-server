@@ -9,6 +9,7 @@ const {
   deleteRecipe,
   getSingleMenuItem,
   updateMenuItem,
+  getStatsInfo,
 } = require("../controllers/products.controller");
 const { verifyToken, verifyAdmin } = require("../middlewares");
 const router = express.Router();
@@ -20,6 +21,7 @@ router.delete("/carts/:id", deletCartItems);
 router.post("/menu", verifyToken, verifyAdmin, postRecipe);
 router.delete("/menu/:id", verifyToken, verifyAdmin, deleteRecipe);
 router.get("/menu/:id", getSingleMenuItem);
-router.patch('/menu/:id', verifyToken, verifyAdmin, updateMenuItem)
+router.patch('/menu/:id', verifyToken, verifyAdmin, updateMenuItem);
+router.get('/admin-stats', verifyToken, verifyAdmin, getStatsInfo);
 
 module.exports = router;

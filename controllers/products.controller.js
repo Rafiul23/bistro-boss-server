@@ -106,6 +106,32 @@ const updateMenuItem = async(req, res)=>{
     } catch (error) {
         res.status(500).json({ error: 'Failed to update a recipe' });
     }
+};
+
+const getStatsInfo = async(req, res)=>{
+    try {
+        const db = await connectDB();
+        const users = await db.collection('users').estimatedDocumentCount();
+        const menuItems = await db.collection('menu').estimatedDocumentCount();
+        const orders = await db.collection('payments').estimatedDocumentCount();
+        // const payments = await db.collection('payments').find().toArray();
+        // const revenue = payments.reduce((sum, item)=> sum + item.price, 0);
+
+        const result = await db.collection('payments').aggregate([
+            {
+                $group: {
+                    _id: null,
+                    revenue: { $sum: '$price'}
+                }
+            }
+        ]).toArray();
+
+        const revenue = result.length > 0 ? result[0].revenue : 0;
+
+        res.send({users, menuItems, orders, revenue})
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to get stats data' });
+    }
 }
 
 module.exports = {
@@ -116,5 +142,6 @@ module.exports = {
     postRecipe,
     deleteRecipe,
     getSingleMenuItem,
-    updateMenuItem
+    updateMenuItem,
+    getStatsInfo
 }
