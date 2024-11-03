@@ -42,7 +42,7 @@ const deletCartItems = async(req, res)=>{
     try {
         const db = await connectDB();
         const id = req.params.id;
-        const query = {_id: new ObjectId.createFromTime(id)};
+        const query = {_id: new ObjectId(id)};
         const result = await db.collection('carts').deleteOne(query);
         res.send(result);
     } catch (error) {
@@ -65,7 +65,7 @@ const deleteRecipe = async(req, res)=>{
     try {
         const db = await connectDB();
         const id = req.params.id;
-        const query = {_id: new ObjectId.createFromTime(id)};
+        const query = {_id: new ObjectId(id)};
         const result = await db.collection('menu').deleteOne(query);
         res.send(result);
     } catch (error) {
@@ -77,7 +77,7 @@ const getSingleMenuItem = async(req, res)=>{
     try {
         const db = await connectDB();
         const id = req.params.id;
-        const query = {_id: new ObjectId.createFromTime(id)};
+        const query = {_id: new ObjectId(id)};
         const result = await db.collection('menu').findOne(query);
         res.send(result);
     } catch (error) {
@@ -90,7 +90,7 @@ const updateMenuItem = async(req, res)=>{
         const db = await connectDB();
         const id = req.params.id;
         const updatedMenu = req.body;
-        const filter = {_id: new ObjectId.createFromTime(id)};
+        const filter = {_id: new ObjectId(id)};
         const updatedDoc = {
             $set: {
                 name: updatedMenu.name,

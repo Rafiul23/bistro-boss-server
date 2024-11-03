@@ -6,7 +6,9 @@ require('dotenv').config();
 const productsRouter = require('./routes/products.route');
 const reviewsRouter = require('./routes/reviews.route');
 const usersRouter = require('./routes/users.route');
+const paymentRouter = require('./routes/payment.route');
 const app = express();
+
 const port = process.env.PORT || 5000;
 
 app.use(cors());
@@ -19,6 +21,7 @@ connectDB();
 app.use(productsRouter);
 app.use(reviewsRouter);
 app.use(usersRouter);
+app.use(paymentRouter);
 
 app.get('/', (req, res) => {
   res.send('Boss is running');
